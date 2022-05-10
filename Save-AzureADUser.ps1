@@ -5,9 +5,9 @@ if (-Not (Get-Module -ListAvailable -Name AzureAD)) {
     $install = Read-Host 'The AzureAD PowerShell module is not installed. Do you want to install it now? (Y/n)'
 
     if($install -eq '' -Or $install -eq 'Y' -Or $install -eq 'Yes'){
-        If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] “Administrator”))
+        If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
         {
-            Write-Warning “Administrator permissions are needed to install the AzureAD PowerShell module.`nPlease re-run this script as an Administrator.”
+            Write-Warning "Administrator permissions are needed to install the AzureAD PowerShell module.`nPlease re-run this script as an Administrator."
             Exit
         }
 
@@ -25,7 +25,7 @@ $TempFile = New-TemporaryFile
 #Go ahead and attempt to get the Azure AD user IDs, but catch the error if there is no existing connection to Azure AD
 Try
 {
-    Get-AzureADUser -All:$true | Export-Csv -Path $TempFile -NoTypeInformation
+    Get-AzureADUser -All:$true | Export-Csv -Path $TempFile -NoTypeInformation -encoding Utf8
 }
 Catch [Microsoft.Open.Azure.AD.CommonLibrary.AadNeedAuthenticationException]
 {
@@ -33,7 +33,7 @@ Catch [Microsoft.Open.Azure.AD.CommonLibrary.AadNeedAuthenticationException]
     Connect-AzureAD | Out-Null
 
     #Try again
-    Get-AzureADUser -All:$true | Export-Csv -Path $TempFile -NoTypeInformation
+    Get-AzureADUser -All:$true | Export-Csv -Path $TempFile -NoTypeInformation -encoding Utf8
 }
 
 
@@ -86,5 +86,5 @@ $xmlWriter.Close()
 # Clean up
 Remove-Item $TempFile
  
-write-host "Azure user ID file created: $((Get-Location).Path)\ForensiTAzureID.xml”
+write-host "Azure user ID file created: $((Get-Location).Path)\ForensiTAzureID.xml"
 
