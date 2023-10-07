@@ -7,7 +7,7 @@ if (-Not (Get-Module -ListAvailable -Name AzureAD)) {
     if($install -eq '' -Or $install -eq 'Y' -Or $install -eq 'Yes'){
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator'))
         {
-            Write-Warning 'Administrator permissions are needed to install the AzureAD PowerShell module.`nPlease re-run this script as an Administrator.'
+            Write-Warning "Administrator permissions are needed to install the AzureAD PowerShell module.`nPlease re-run this script as an Administrator."
             Exit
         }
 
