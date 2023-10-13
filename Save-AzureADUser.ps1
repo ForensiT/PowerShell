@@ -1,6 +1,7 @@
 # Check that the needed Microsoft Graph Modules are installed and install only if needed
 $Modules = "Microsoft.Graph.Authentication", "Microsoft.Graph.Identity.DirectoryManagement", "Microsoft.Graph.Users"
-$ToInstall = Compare-Object (Get-Module -ListAvailable -Name $Modules) $Modules
+$CurrentModules = Get-Module -ListAvailable -Name $Modules
+$ToInstall = Compare-Object -ReferenceObject @($CurrentModules | Select-Object) -DifferenceObject $Modules
 if ($ToInstall) {
     $Install = Read-Host 'The Microsoft Graph PowerShell module is not installed. Do you want to install it now? (Y/n)'
     if ($Install -eq '' -Or $Install -eq 'Y' -Or $Install -eq 'Yes') {
