@@ -17,7 +17,7 @@ if(-not $getmodule)
             Write-Warning "Administrator permissions are needed to install the Microsoft.Graph PowerShell module.`nPlease re-run this script as an Administrator."
             Exit
         }
-        install-module Microsoft.Graph -scope AllUsers
+        install-module Microsoft.Graph -scope AllUsers -AllowClobber
     }
     else
     {
@@ -45,7 +45,7 @@ if($installedversion -lt $latestversion)
             Write-Warning "Administrator permissions are needed to update the Microsoft.Graph PowerShell module.`nPlease re-run this script as an Administrator."
             Exit
         }
-        install-module Microsoft.Graph -scope AllUsers -Force
+        install-module Microsoft.Graph -scope AllUsers -Force -AllowClobber
     }
     else
     {
@@ -68,7 +68,7 @@ if($context)
 }
 
 # make new connection
-connect-mggraph -scopes "User.Read.All,Organization.Read.All" -NoWelcome
+connect-mggraph -scopes "User.Read.All,Organization.Read.All"
 
 # Get details
 $users=get-mguser -all
